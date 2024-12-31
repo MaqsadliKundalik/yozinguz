@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Ko'p so'raladigan savollar - yozing.uz{% endblock %}
+
+{% block content %}
+<div class="faq-container">
+    <h1 class="faq-title">Ko'p so'raladigan savollar</h1>
+
+    <div class="faq-list">
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer(this)">
+                <span>yozing.uz da qanday post yozish mumkin?</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Post yozish uchun avval ro'yxatdan o'tishingiz kerak. So'ng "Post yozish" tugmasini bosib, post yaratish formasini to'ldirishingiz mumkin.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer(this)">
+                <span>Postlarga rasm qo'shsa bo'ladimi?</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Ha, post yaratishda rasmlarni yuklash imkoniyati mavjud. Rasm yuklash ixtiyoriy.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer(this)">
+                <span>Profilni qanday tahrirlash mumkin?</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Profil sahifasiga o'tib, "Profilni tahrirlash" tugmasini bosing. U yerda avatar, bio va lavozimingizni o'zgartirishingiz mumkin.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer(this)">
+                <span>Postlarni teglar bilan qanday filtrlash mumkin?</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Bosh sahifada barcha mavjud teglar ko'rsatilgan. Tegni bosish orqali shu tegga oid postlarni ko'rishingiz mumkin.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .faq-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .faq-title {
+        text-align: center;
+        color: white;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+
+    .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .faq-item {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .faq-question {
+        width: 100%;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+        color: var(--dark-color);
+        font-weight: 500;
+        text-align: left;
+    }
+
+    .faq-question i {
+        transition: transform 0.3s ease;
+    }
+
+    .faq-question.active i {
+        transform: rotate(180deg);
+    }
+
+    .faq-answer {
+        padding: 0 1.5rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .faq-answer p {
+        color: #666;
+        line-height: 1.6;
+        padding-bottom: 1.5rem;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .faq-container {
+            margin: 1rem;
+        }
+
+        .faq-title {
+            font-size: 1.5rem;
+        }
+
+        .faq-question {
+            font-size: 1rem;
+            padding: 1rem;
+        }
+
+        .faq-answer {
+            padding: 0 1rem;
+        }
+    }
+</style>
+
+<script>
+function toggleAnswer(button) {
+    button.classList.toggle('active');
+    const answer = button.nextElementSibling;
+    
+    if (button.classList.contains('active')) {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+    } else {
+        answer.style.maxHeight = 0;
+    }
+}
+</script>
+{% endblock %} 

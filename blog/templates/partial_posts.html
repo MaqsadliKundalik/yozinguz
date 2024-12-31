@@ -1,0 +1,101 @@
+{% if posts %}
+    {% for post in posts %}
+        <div class="post-card">
+            <div class="post-image">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                {% else %}
+                    <div class="post-image-placeholder">
+                        <i class="fas fa-feather-alt"></i>
+                        <span>yozing.uz</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="post-content">
+                <div class="post-header">
+                    <div class="author-info">
+                        <div class="author-avatar">
+                            {% if post.author.profile.avatar %}
+                                <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.username }}">
+                            {% else %}
+                                <img src="https://ui-avatars.com/api/?name={{ post.author.username }}&background=4ECDC4&color=fff" alt="{{ post.author.username }}">
+                            {% endif %}
+                        </div>
+                        <div class="author-details">
+                            <span class="author-name">{{ post.author.username }}</span>
+                            <span class="post-date">{{ post.created_at|date:"d.m.Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="post-stats">
+                        <span class="post-views">
+                            <i class="far fa-eye"></i>
+                            {{ post.views }} marta
+                        </span>
+                        <span class="post-likes">
+                            <i class="far fa-heart"></i>
+                            {{ post.likes.count }}
+                        </span>
+                    </div>
+                </div>
+
+                <h2 class="post-title">
+                    <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                </h2>
+
+                <div class="post-tags">
+                    {% for tag in post.tags.all %}
+                        <a href="?tag={{ tag.slug }}" class="post-tag">#{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+
+                <a href="{% url 'post_detail' post.pk %}" class="read-more-button">
+                    <span>Batafsil</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="no-results">
+        <i class="fas fa-search"></i>
+        <p>Postlar topilmadi</p>
+    </div>
+{% endif %}
+
+<style>
+    /* Post teglar stillar */
+    .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .post-tag {
+        padding: 0.3rem 0.8rem;
+        background: #f5f5f5;
+        color: #666;
+        text-decoration: none;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+
+    .post-tag:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .post-tags {
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .post-tag {
+            padding: 0.2rem 0.6rem;
+            font-size: 0.8rem;
+        }
+    }
+</style> 

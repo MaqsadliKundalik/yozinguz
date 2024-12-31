@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Bog'lanish - yozing.uz{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <h1 class="contact-title">Biz bilan bog'lanish</h1>
+
+    <div class="contact-content">
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <h3>Email</h3>
+                    <p>info@yozing.uz</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fab fa-telegram"></i>
+                <div>
+                    <h3>Telegram</h3>
+                    <p>@yozinguz</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <h3>Manzil</h3>
+                    <p>Toshkent, O'zbekiston</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .contact-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .contact-title {
+        text-align: center;
+        color: white;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+
+    .contact-content {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 2rem;
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .contact-item i {
+        font-size: 2rem;
+        color: var(--primary-color);
+    }
+
+    .contact-item h3 {
+        color: var(--dark-color);
+        margin: 0 0 0.5rem 0;
+    }
+
+    .contact-item p {
+        color: #666;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .contact-container {
+            margin: 1rem;
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+        }
+
+        .contact-content {
+            padding: 1.5rem;
+        }
+
+        .contact-item {
+            gap: 1rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock %} 

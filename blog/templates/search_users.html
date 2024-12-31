@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% block title %}Foydalanuvchilarni qidirish - yozing.uz{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <div class="search-header">
+        <h1 class="search-title">Foydalanuvchilarni qidirish</h1>
+        <form class="search-form" method="get" action="{% url 'search_users' %}">
+            <div class="search-input-group">
+                <input 
+                    type="text" 
+                    name="q" 
+                    value="{{ query }}" 
+                    placeholder="Foydalanuvchi nomi yoki lavozimi..."
+                    class="search-input"
+                    autocomplete="off"
+                >
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% if query %}
+        <div class="search-results">
+            {% if users %}
+                {% for user in users %}
+                    <a href="{% url 'user_profile' username=user.username %}" class="user-card">
+                        <div class="user-avatar">
+                            {% if user.profile.avatar %}
+                                <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
+                            {% else %}
+                                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=4ECDC4&color=fff" alt="{{ user.username }}">
+                            {% endif %}
+                        </div>
+                        <div class="user-info">
+                            <h3 class="user-name">{{ user.username }}</h3>
+                            {% if user.profile.position %}
+                                <p class="user-position">
+                                    <i class="fas fa-briefcase"></i>
+                                    {{ user.profile.position }}
+                                </p>
+                            {% endif %}
+                        </div>
+                        <div class="user-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <p>{{ query }} so'rovi bo'yicha hech kim topilmadi</p>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="search-placeholder">
+            <i class="fas fa-users"></i>
+            <p>Foydalanuvchi nomini yoki lavozimini kiriting</p>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .search-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .search-header {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+    .search-title {
+        margin: 0 0 1.5rem 0;
+        color: var(--dark-color);
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .search-form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .search-input-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 1rem;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+
+    .search-button {
+        padding: 0 1.5rem;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .search-button:hover {
+        background: #45B7AC;
+    }
+
+    .user-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+    }
+
+    .user-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .user-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .user-info {
+        flex: 1;
+    }
+
+    .user-name {
+        margin: 0 0 0.3rem 0;
+        color: var(--dark-color);
+        font-size: 1.1rem;
+    }
+
+    .user-position {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .user-position i {
+        color: #45B7AC;
+    }
+
+    .user-arrow {
+        color: #ccc;
+        transition: transform 0.3s ease;
+    }
+
+    .user-card:hover .user-arrow {
+        transform: translateX(5px);
+        color: var(--primary-color);
+    }
+
+    .no-results,
+    .search-placeholder {
+        text-align: center;
+        padding: 3rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        color: #666;
+    }
+
+    .no-results i,
+    .search-placeholder i {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .search-header {
+            padding: 1.5rem;
+        }
+
+        .search-input-group {
+            flex-direction: column;
+        }
+
+        .search-button {
+            padding: 1rem;
+        }
+
+        .user-card {
+            padding: 0.8rem;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+        }
+    }
+</style>
+{% endblock %} 

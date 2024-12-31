@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Tahrirlash{% endblock %}
+
+{% block content %}
+<style>
+    .edit-post-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .edit-post-box {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .edit-post-title {
+        color: var(--dark-color);
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .edit-post-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group label {
+        color: var(--dark-color);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group textarea {
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        width: 100%;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group textarea:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+    }
+
+    .form-group textarea {
+        min-height: 200px;
+        resize: vertical;
+    }
+
+    .image-upload-wrapper {
+        position: relative;
+    }
+
+    .current-image {
+        margin: 1rem 0;
+        max-width: 300px;
+    }
+
+    .current-image img {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .form-group input[type="file"] {
+        padding: 0.75rem;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .form-group input[type="file"]:hover {
+        border-color: var(--primary-color);
+    }
+
+    .help-text {
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    .error-message {
+        color: #d63031;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    .submit-button {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 1rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .submit-button:hover {
+        background: #45B7AC;
+        transform: translateY(-2px);
+    }
+
+    .image-preview {
+        margin-top: 1rem;
+        max-width: 300px;
+    }
+
+    .image-preview img {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+        .edit-post-container {
+            margin: 1rem;
+        }
+
+        .edit-post-box {
+            padding: 1.5rem;
+        }
+
+        .edit-post-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<div class="edit-post-container">
+    <div class="edit-post-box">
+        <h1 class="edit-post-title">
+            <i class="fas fa-edit"></i>
+            Postni tahrirlash
+        </h1>
+
+        <form method="post" enctype="multipart/form-data" class="edit-post-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Sarlavha</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="error-message">
+                        {{ form.title.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.content.id_for_label }}">Matn</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="error-message">
+                        {{ form.content.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.image.id_for_label }}">
+                    <i class="fas fa-image"></i>
+                    Rasm
+                </label>
+                {% if post.image %}
+                    <div class="current-image">
+                        <img src="{{ post.image.url }}" alt="Current image">
+                    </div>
+                {% endif %}
+                <div class="image-upload-wrapper">
+                    {{ form.image }}
+                    <div class="image-preview" id="imagePreview"></div>
+                </div>
+                {% if form.image.errors %}
+                    <div class="error-message">
+                        {{ form.image.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.tags.id_for_label }}">
+                    <i class="fas fa-tags"></i>
+                    Teglar
+                </label>
+                {{ form.tags }}
+                <small class="help-text">Teglarni probel bilan ajrating (masalan: yangiliklar texnologiya dasturlash)</small>
+                {% if form.tags.errors %}
+                    <div class="error-message">
+                        {{ form.tags.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="submit-button">
+                <i class="fas fa-save"></i>
+                O'zgarishlarni saqlash
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+    const preview = document.getElementById('imagePreview');
+    const file = e.target.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+        }
+        reader.readAsDataURL(file);
+    } else {
+        preview.innerHTML = '';
+    }
+});
+</script>
+{% endblock %} 

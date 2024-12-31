@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Postlarni qidirish - yozing.uz{% endblock %}
+
+{% block content %}
+<div class="search-container">
+    <div class="search-header">
+        <h1 class="search-title">Postlarni qidirish</h1>
+        <div class="search-input-group">
+            <input 
+                type="text" 
+                id="searchInput"
+                placeholder="Post nomini kiriting..."
+                class="search-input"
+                autocomplete="off"
+                value="{{ query }}"
+            >
+            <i class="fas fa-search search-icon"></i>
+        </div>
+    </div>
+
+    <div id="searchResults" class="posts-grid">
+        {% include 'partial_posts.html' with posts=posts %}
+    </div>
+</div>
+
+<style>
+    .search-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .search-header {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+    .search-title {
+        margin: 0 0 1.5rem 0;
+        color: var(--dark-color);
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .search-input-group {
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 1rem 3rem 1rem 1rem;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+    }
+
+    .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    @media (max-width: 1200px) {
+        .posts-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .search-header {
+            padding: 1.5rem;
+        }
+
+        .posts-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+let searchTimeout;
+
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    clearTimeout(searchTimeout);
+    const query = e.target.value;
+    
+    searchTimeout = setTimeout(() => {
+        fetch(`{% url 'search_posts' %}?q=${encodeURIComponent(query)}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('searchResults').innerHTML = html;
+        });
+    }, 300); // 300ms kechikish
+});
+</script>
+{% endblock %} 

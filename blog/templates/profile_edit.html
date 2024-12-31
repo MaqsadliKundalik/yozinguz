@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}Profilni tahrirlash - yozing.uz{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">
+        <i class="fas fa-user-edit"></i>
+        Profilni tahrirlash
+    </h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label class="form-label">Avatar</label>
+            {{ form.avatar }}
+            {% if form.avatar.errors %}
+                <div class="error-message">{{ form.avatar.errors }}</div>
+            {% endif %}
+            {% if user.profile.avatar %}
+                <div class="current-avatar">
+                    <img src="{{ user.profile.avatar.url }}" alt="Current avatar">
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Lavozim</label>
+            {{ form.position }}
+            {% if form.position.errors %}
+                <div class="error-message">{{ form.position.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Bio</label>
+            {{ form.bio }}
+            {% if form.bio.errors %}
+                <div class="error-message">{{ form.bio.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="submit-btn">
+            <i class="fas fa-save"></i>
+            O'zgarishlarni saqlash
+        </button>
+    </form>
+</div>
+
+<style>
+    .form-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        padding: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+    }
+
+    .form-title {
+        text-align: center;
+        color: var(--dark-color);
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--dark-color);
+        font-weight: 500;
+    }
+
+    .current-avatar {
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .current-avatar img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--primary-color);
+    }
+
+    /* Submit tugmasi stili */
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+        background: #45B7AC;
+        transform: translateY(-2px);
+    }
+
+    /* Form elementlari stili */
+    .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+        outline: none;
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>
+{% endblock %} 

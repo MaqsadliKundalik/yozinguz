@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Postni o'chirish - {{ post.title }}{% endblock %}
+
+{% block content %}
+<style>
+    .delete-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .delete-box {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .delete-icon {
+        font-size: 4rem;
+        color: #ff6b6b;
+        margin-bottom: 1rem;
+    }
+
+    .delete-title {
+        color: var(--dark-color);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .delete-message {
+        color: #666;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .delete-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .cancel-button {
+        padding: 0.75rem 1.5rem;
+        background: var(--light-color);
+        color: var(--dark-color);
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .cancel-button:hover {
+        background: #dfe6e9;
+        transform: translateY(-2px);
+    }
+
+    .confirm-delete-button {
+        padding: 0.75rem 1.5rem;
+        background: #ff6b6b;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .confirm-delete-button:hover {
+        background: #ee5253;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .delete-container {
+            margin: 1rem;
+        }
+
+        .delete-box {
+            padding: 1.5rem;
+        }
+
+        .delete-actions {
+            flex-direction: column;
+        }
+
+        .cancel-button,
+        .confirm-delete-button {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="delete-container">
+    <div class="delete-box">
+        <i class="fas fa-exclamation-triangle delete-icon"></i>
+        <h1 class="delete-title">Postni o'chirishni tasdiqlang</h1>
+        <p class="delete-message">
+            Siz "<strong>{{ post.title }}</strong>" postini o'chirmoqchisiz. 
+            Bu amalni ortga qaytarib bo'lmaydi. Davom etishni xohlaysizmi?
+        </p>
+        <form method="post" class="delete-actions">
+            {% csrf_token %}
+            <a href="{% url 'post_detail' post.pk %}" class="cancel-button">
+                <i class="fas fa-times"></i>
+                Bekor qilish
+            </a>
+            <button type="submit" class="confirm-delete-button">
+                <i class="fas fa-trash-alt"></i>
+                O'chirish
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %} 

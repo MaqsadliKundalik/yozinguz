@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Biz haqimizda - yozing.uz{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <div class="about-content">
+        <h1 class="about-title">Biz haqimizda</h1>
+        
+        <div class="about-section">
+            <h2>yozing.uz nima?</h2>
+            <p>yozing.uz - bu o'zbek tilidagi blog platformasi. Bu yerda siz o'z fikrlaringizni, bilimlaringizni va tajribangizni boshqalar bilan ulashishingiz mumkin.</p>
+        </div>
+
+        <div class="about-section">
+            <h2>Bizning maqsadimiz</h2>
+            <p>O'zbek internet maydonida sifatli kontent yaratish va bilim almashish uchun qulay platforma yaratish.</p>
+        </div>
+
+        <div class="about-section">
+            <h2>Qanday ishtirok etish mumkin?</h2>
+            <ul>
+                <li>Ro'yxatdan o'ting va o'z postlaringizni yarating</li>
+                <li>Boshqalar postlarini o'qing va muhokama qiling</li>
+                <li>O'z bilimlaringiz va tajribangiz bilan o'rtoqlashing</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .about-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .about-content {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .about-title {
+        color: var(--dark-color);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+
+    .about-section {
+        margin-bottom: 2rem;
+    }
+
+    .about-section h2 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .about-section p {
+        color: var(--dark-color);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .about-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .about-section li {
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .about-section li::before {
+        content: '•';
+        color: var(--primary-color);
+        position: absolute;
+        left: 0;
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+        .about-container {
+            margin: 1rem;
+        }
+
+        .about-content {
+            padding: 1.5rem;
+        }
+
+        .about-title {
+            font-size: 1.5rem;
+        }
+
+        .about-section h2 {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+{% endblock %}
