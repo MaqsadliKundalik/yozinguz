@@ -78,6 +78,7 @@ def profile_view(request, username=None):
         'posts': posts,
         'total_views': total_views,
         'total_likes': total_likes,
+        'is_owner': profile_user == request.user,
     }
     
     return render(request, 'profile.html', context)
